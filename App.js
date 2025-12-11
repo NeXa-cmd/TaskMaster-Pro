@@ -13,6 +13,7 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -308,10 +309,21 @@ const MainAppNavigator = ({ route }) => {
 
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Tasks') {
+            iconName = focused ? 'checkmark-circle' : 'checkmark-circle-outline';
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'person' : 'person-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
         tabBarActiveTintColor: '#007AFF',
         tabBarInactiveTintColor: '#8E8E93',
-      }}
+      })}
     >
       <Tab.Screen 
         name="Tasks" 
